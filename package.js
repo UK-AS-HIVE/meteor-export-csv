@@ -8,7 +8,10 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.0.1');
   api.use(['coffeescript', 'meteor'], ['client','server']);
+  api.use(['iron:router@1.0.6', 'http', 'mongo'], ['client', 'server']);
+  api.addFiles('csv-shared.coffee', ['client', 'server']);
   api.addFiles('csv-server.coffee', 'server');
   api.addFiles('csv-client.coffee', 'client');
+
 
 });
