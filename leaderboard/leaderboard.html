@@ -15,7 +15,7 @@
 </body>
 
 <template name="leaderboard">
-  <a class="download-csv" href="/export?collectionName=Players&filter=%5Bobject%20Object%5D&fields%5B%5D=name&fields%5B%5D=score&filename=myData">Export Data as CSV</a>
+  <a class="download-csv">Export Data as CSV</a>
   <ol class="leaderboard">
     {{#each players}}
       {{> player}}

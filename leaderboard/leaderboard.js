@@ -18,6 +18,9 @@ if (Meteor.isClient) {
     'click .inc': function () {
       Players.update(Session.get("selectedPlayer"), {$inc: {score: 5}});
     },
+    'click .download-csv': function(){
+      downloadCSV("Players", {}, ['name', 'score'], 'test')
+    }
 
   });
 
