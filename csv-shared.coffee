@@ -1,21 +1,35 @@
 Router.route "/export", (->
-  query = @request.query
+  if not @request.cookies.meteor_login_token?
+    @response.statusCode = 403
+    @response.end 'Access denied.'
+    return
+
+  u = Meteor.users.findOne
+    "services.resume.loginTokens.hashedToken": Accounts._hashLoginToken(@request.cookies.meteor_login_token)
+  console.log 'User ' + u.username + ' exporting CSV'
+  if not u? ## or check if has access
+    @response.statusCode = 403
+    @response.end 'Access denied.'
+    return
+  query = @params.query
+  res = @response
   console.log(query)
+  collectionName = query.collectionName
   fields = query.fields
   filename = query.filename
   filter = query.filter
-  console.log("Started CSV Export")
-  CSV = "data:text/csv;charset=utf-8,"
-  CSV += fields.join()
-  CSV += '\n'
-  global['Players'].find(filter).forEach (doc)->
+  res.setHeader 'Content-Type', 'text/csv'
+  res.setHeader 'Content-Disposition', 'attachment; filename="' + filename + '.csv"'
+  CSV = fields.join() + '\n'
+  global[collectionName].find().forEach (doc)->
       for i,a in fields
-        CSV += doc[i] 
+        CSV = CSV + doc[i] 
         if a < fields.length-1
-          CSV += ','
+          CSV = CSV + ','
       CSV +='\n'
-  @response.end CSV
-  return
+  res.write(CSV)
+  res.end()
 ),
   where: "server"
+  name: "exportCSV"
 

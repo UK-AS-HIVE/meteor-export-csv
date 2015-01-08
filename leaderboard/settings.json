@@ -1,0 +1,7 @@
+{
+  "public":{
+    "csv": {
+      "exportUrl": "/export"
+    }
+  }
+}
