@@ -1,7 +1,11 @@
 // Set up a collection to contain player information. On the server,
 // it is backed by a MongoDB collection named "players".
-
+Router.route('/', function(){
+  this.render('leaderboard')
+})
 Players = new Mongo.Collection("players");
+
+
 
 if (Meteor.isClient) {
   Template.leaderboard.helpers({
@@ -19,7 +23,7 @@ if (Meteor.isClient) {
       Players.update(Session.get("selectedPlayer"), {$inc: {score: 5}});
     },
     'click .download-csv': function(){
-      downloadCSV("Players", {}, ['name', 'score'], 'test')
+      downloadCSV('Players', {score:45}, ['name', 'score'], 'test')
     }
 
   });

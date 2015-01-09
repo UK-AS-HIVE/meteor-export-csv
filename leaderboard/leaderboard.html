@@ -5,16 +5,14 @@
 </head>
 
 <body>
+</body>
+
+<template name="leaderboard">
   <div class="outer">
     <div class="logo"></div>
     <h1 class="title">Leaderboard</h1>
     <div class="subtitle">Select a scientist to give them points</div>
     {{>loginButtons}}
-    {{> leaderboard}}
-  </div>
-</body>
-
-<template name="leaderboard">
   <a class="download-csv">Export Data as CSV</a>
   <ol class="leaderboard">
     {{#each players}}
@@ -30,6 +28,8 @@
   {{else}}
     <div class="message">Click a player to select</div>
   {{/if}}
+    </div>
+
 </template>
 
 <template name="player">
