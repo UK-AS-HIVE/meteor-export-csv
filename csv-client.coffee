@@ -1,8 +1,7 @@
 @downloadCSV = (collectionName, filter, fields, filename) ->
-  Router.go 'exportCSV', {},
-    {query:
+  Router.go "exportCSV", {},
+    query:
       collectionName: collectionName
-      filter: filter
+      filter: encodeURIComponent(JSON.stringify(filter))
       fields: fields
       filename: filename
-    }
