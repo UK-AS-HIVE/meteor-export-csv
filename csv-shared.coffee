@@ -1,4 +1,4 @@
-Router.route "/export", (->
+Router.route Meteor.settings.public.csv.exportUrl, (->
   if not @request.cookies.meteor_login_token?
     @response.statusCode = 403
     @response.end 'Access denied.'
@@ -21,16 +21,17 @@ Router.route "/export", (->
   fields = query.fields
   filename = query.filename
   filter = JSON.parse(query.filter)
-  res.setHeader 'Content-Type', 'text/csv'
-  res.setHeader 'Content-Disposition', 'attachment; filename="' + filename + '.csv"'
-  CSV = fields.join() + '\n'
+  headers = 
+    'Content-type': 'text/csv;charset="UTF-8"'
+    'Content-Disposition': 'attachment; filename=' + filename + '.csv' 
+  res.writeHead(200, headers); 
+  res.write(fields.join() + '\n')
   global[collectionName].find(filter).forEach (doc)->
       for i,a in fields
-        CSV = CSV + doc[i] 
+        res.write(doc[i]||"") 
         if a < fields.length-1
-          CSV = CSV + ','
-      CSV +='\n'
-  res.write(CSV)
+          res.write(',')
+      res.write('\n')
   res.end()
 ),
   where: "server"
