@@ -20,7 +20,7 @@ Router.route Meteor.settings.public.csv.exportUrl, (->
   collectionName = query.collectionName
   fields = query.fields
   filename = query.filename
-  filter = JSON.parse(query.filter)
+  filter = EJSON.parse(query.filter)
   headers = 
     'Content-type': 'text/csv;charset="UTF-8"'
     'Content-Disposition': 'attachment; filename=' + filename + '.csv' 

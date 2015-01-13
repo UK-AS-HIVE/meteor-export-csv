@@ -2,6 +2,6 @@
   Router.go "exportCSV", {},
     query:
       collectionName: collectionName
-      filter: encodeURIComponent(JSON.stringify(filter))
+      filter: encodeURIComponent(EJSON.stringify(filter))
       fields: fields
       filename: filename
