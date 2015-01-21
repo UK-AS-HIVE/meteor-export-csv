@@ -1,3 +1,7 @@
 Meteor.startup ->
-  if !Meteor.settings.public.csv
-    throw new Error "CSV Export Settings Missing. Please add a settings file and load meteor with --settings mysettings.json"
+  if not Meteor.settings?.public?.csv?.exportUrl?
+    Meteor.settings = _.extend
+      public:
+        csv:
+          exportUrl: '/export'
+      , Meteor.settings
