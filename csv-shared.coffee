@@ -1,4 +1,4 @@
-Router.route Meteor.settings.public.csv.exportUrl, (->
+@exportCSV = ->
   if not @request.cookies.meteor_login_token?
     @response.statusCode = 403
     @response.end 'Access denied.'
@@ -28,12 +28,13 @@ Router.route Meteor.settings.public.csv.exportUrl, (->
   res.write(fields.join() + '\n')
   global[collectionName].find(filter).forEach (doc)->
       for i,a in fields
-        res.write(doc[i]||"") 
+        res.write(doc[i]?.toString()||"")
         if a < fields.length-1
           res.write(',')
       res.write('\n')
   res.end()
-),
+
+Router.route '/exportCSV', @exportCSV,
   where: "server"
   name: "exportCSV"
 
