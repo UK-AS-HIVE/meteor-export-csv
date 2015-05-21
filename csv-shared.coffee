@@ -21,20 +21,19 @@
   fields = query.fields
   filename = query.filename
   filter = EJSON.parse(query.filter)
-  headers = 
+  headers =
     'Content-type': 'text/csv;charset="UTF-8"'
-    'Content-Disposition': 'attachment; filename=' + filename + '.csv' 
-  res.writeHead(200, headers); 
+    'Content-Disposition': 'attachment; filename=' + filename + '.csv'
+  res.writeHead(200, headers)
   res.write(fields.join() + '\n')
   global[collectionName].find(filter).forEach (doc)->
-      for i,a in fields
-        res.write(doc[i]?.toString()||"")
-        if a < fields.length-1
-          res.write(',')
-      res.write('\n')
+    for i,a in fields
+      res.write(doc[i]?.toString()||"")
+      if a < fields.length-1
+        res.write(',')
+    res.write('\n')
   res.end()
 
 Router.route '/exportCSV', @exportCSV,
   where: "server"
   name: "exportCSV"
-
