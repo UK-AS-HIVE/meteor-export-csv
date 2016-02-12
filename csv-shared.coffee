@@ -28,7 +28,10 @@
   res.write(fields.join() + '\n')
   global[collectionName].find(filter).forEach (doc)->
     for i,a in fields
-      res.write(doc[i]?.toString()||"")
+      if Array.isArray doc[i]
+        res.write(doc[i].join ';')
+      else
+        res.write(doc[i]?.toString()||"")
       if a < fields.length-1
         res.write(',')
     res.write('\n')
