@@ -1,7 +1,7 @@
 Package.describe({
   name: 'hive:export-csv',
   summary: 'Export CSV of a given collection.',
-  version: '1.0.0',
+  version: '1.0.1',
   git: ''
 });
 

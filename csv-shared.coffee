@@ -29,9 +29,9 @@
   global[collectionName].find(filter).forEach (doc)->
     for i,a in fields
       if Array.isArray doc[i]
-        res.write(doc[i].join ';')
+        res.write('"' + doc[i].join(';').replace(/"/g, '""') + '"')
       else
-        res.write(doc[i]?.toString()||"")
+        res.write('"' + (doc[i]?.toString()||"").replace(/"/g, '""') + '"')
       if a < fields.length-1
         res.write(',')
     res.write('\n')
