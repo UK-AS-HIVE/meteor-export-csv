@@ -17,16 +17,15 @@
   query = @params.query
   res = @response
   console.log(query)
-  collectionName = query.collectionName
-  fields = query.fields
-  filename = query.filename
-  filter = EJSON.parse(query.filter)
+  writeCSV global[query.collectionName], query.filter, query.fields, EJSON.parse(query.filter), res
+
+@writeCSV = (collection, filter, fields, filename, res) ->
   headers =
     'Content-type': 'text/csv;charset="UTF-8"'
     'Content-Disposition': 'attachment; filename=' + filename + '.csv'
   res.writeHead(200, headers)
   res.write(fields.join() + '\n')
-  global[collectionName].find(filter).forEach (doc)->
+  collection.find(filter).forEach (doc)->
     for i,a in fields
       if Array.isArray doc[i]
         res.write('"' + doc[i].join(';').replace(/"/g, '""') + '"')
@@ -37,6 +36,3 @@
     res.write('\n')
   res.end()
 
-Router.route '/exportCSV', @exportCSV,
-  where: "server"
-  name: "exportCSV"
