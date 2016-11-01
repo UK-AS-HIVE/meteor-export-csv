@@ -1,35 +1,23 @@
-export-csv
-==
-##Overview##
-This is a package to implement CSV exporting on a collection with specified filters.
-##Installation##
+# hive:export-csv
+Package to implement CSV exporting on a collection with specified filters.
+
+## Installation
 To install the package, create a packages/ directory in your meteor app, and move hive:export-csv there. Then run meteor add hive:export-csv
 
 ex:
 * mkdir -p packages
-* git clone https://github.com/UK-AS-HIVE/meteor-accounts-ldap packages/hive:accounts-ldap
+* git clone https://github.com/UK-AS-HIVE/meteor-export-csv packages/hive:export-csv
 * meteor add hive:export-csv
 
-##Usage##
-Your exportUrl variable will need to be set in a settings.json file as. In the future, you will be able to add other settings such as user authentication etc... An example is in `leaderboard/`. 
+## API
 
-`{
-  "public":{
-    "csv": {
-      "exportUrl": "/export"
-    }
-  }
-}`
+#### exportCSV() - _server_
+action for a server-side route
 
-`downloadCSV(collectionName, filters, fields, filename)` will automatically download a csv file with the data selected.
+#### writeCSV(collection, filter, fields, [filename], stream) - _server_
+writes specified collection documents into `stream` as flattened CSV
 
+#### downloadCSV(collectionName, filters, fields, filename) - _client_
+automatically download a csv file with the data selected.
+probably deprecated - consider unstable
 
-example: ` downloadCSV("Players", {score:45}, ['name', 'score'], 'myPlayers.csv')`
-
-
-To run example:
-- cd hive:export-csv/leaderboard
-- meteor --settings settings.json
-
-##Future Possibilities##
-Route should accept authentication function and give/take away access depending on the result of that function.
