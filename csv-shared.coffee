@@ -33,7 +33,7 @@ writeCSV = (collection, filter, fields, filename, res) ->
       filename += '.csv'
     headers =
       'Content-type': 'text/csv;charset="UTF-8"'
-      'Content-Disposition': 'attachment; filename=' + filename + '.csv'
+      'Content-Disposition': 'attachment; filename=' + filename
     res.writeHead(200, headers)
   res.write(fields.join() + '\n')
   collection.find(filter).forEach (doc)->
